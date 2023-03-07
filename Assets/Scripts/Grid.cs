@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -7,17 +8,16 @@ public class Grid
     public readonly Node[, ] nmap;
     public readonly List<Node> starts = new(), ends = new();
     private readonly int _sizeX, _sizeY;
+    private readonly BoundsInt _bounds;
 
     public Grid(Tilemap map)
     {
-        var bounds = map.cellBounds;
-        var allTiles = map.GetTilesBlock(bounds);
+        _bounds = map.cellBounds;
+        var allTiles = map.GetTilesBlock(_bounds);
 
-        _sizeX = bounds.size.x;
-        _sizeY = bounds.size.y;
+        _sizeX = _bounds.size.x;
+        _sizeY = _bounds.size.y;
         nmap = new Node[_sizeX, _sizeY];
-        int cellX = bounds.xMin;
-        int cellY = bounds.yMin;
 
         for (int x = 0; x < _sizeX; x++) {
             for (int y = 0; y < _sizeY; y++) {
@@ -25,8 +25,8 @@ public class Grid
                 if (tile is not null)
                 {
                     var pos = new Vector2Int(x, y);
-                    var worldPos = map.LocalToWorld(
-                        new Vector3(pos.x + bounds.xMin, pos.y + bounds.yMin));
+                    var worldPos = map.CellToWorld(
+                        new Vector3Int(pos.x + _bounds.xMin, pos.y + _bounds.yMin));
                     var node = new Node(worldPos, pos);
 
                     switch (tile.name)
@@ -38,12 +38,22 @@ public class Grid
                     }
                     nmap[x, y] = node;
                 }
-                cellY++;
             }
-            cellX++;
         }
     }
-    
+
+    public Vector2Int WorldToCellPosition(Vector3 pos)
+    {
+        var correctPos = GetCorrectWorldPosition(pos);
+        return new Vector2Int((int)(correctPos.x - _bounds.xMin), (int)(correctPos.y - _bounds.yMin));
+    }
+    public Vector3 GetCorrectWorldPosition(Vector3 worldPos) 
+        => new Vector3((int)Math.Floor(worldPos.x), (int)Math.Floor(worldPos.y));
+
+    public List<Node> GetNeighbours(Node node, INodeFilter filter) 
+        => filter.Filtrate(GetNeighbours(node));
+
+
     public List<Node> GetNeighbours(Node node) {
         List<Node> neighbours = new List<Node>();
 
@@ -105,8 +115,4 @@ public class Grid
             return Node.NULL;
         return nmap[pos.x, pos.y];
     }
-    
-    
-
-    
 }
