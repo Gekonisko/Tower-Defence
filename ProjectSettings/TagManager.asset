@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Projectile
+  - Obstacle
+  - Tower
   layers:
   - Default
   - TransparentFX
@@ -60,6 +62,9 @@ TagManager:
     locked: 0
   - name: Effects
     uniqueID: 306066733
+    locked: 0
+  - name: UI
+    uniqueID: 2178169953
     locked: 0
   - name: Default
     uniqueID: 0
