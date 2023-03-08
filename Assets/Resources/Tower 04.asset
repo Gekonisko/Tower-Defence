@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b6dcc175e45dc8a2d935bfde6f309, type: 3}
+  m_Name: Tower 04
+  m_EditorClassIdentifier: 
+  timeToShotInSeconds1: 4
+  zoneRadius1: 2
+  timeToShotInSeconds2: 2
+  zoneRadius2: 3
+  timeToShotInSeconds3: 1
+  zoneRadius3: 4
+  explosionDamage1: 1
+  explosionRadius1: 0.5
+  explosionDamage2: 2
+  explosionRadius2: 0.75
+  explosionDamage3: 3
+  explosionRadius3: 1

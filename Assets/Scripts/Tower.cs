@@ -1,26 +1,33 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ScriptableObjects;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    [SerializeField] private int level = 1;
+    public int Level => _level;
+    private int _level = 0;
     
+    [SerializeField] private BaseTowerScriptableObject towerData;
     [SerializeField] private Transform weaponTransform;
     [SerializeField] private Animator weaponAnimator;
     
     [SerializeField] private GameObject projectile;
-    [SerializeField] private float timeToShotInSeconds;
+    private float _timeToShotInSeconds;
     private float _timer;
 
     private Animator _animator;
+    private CircleCollider2D _collider2D;
+    
     private Transform _targetEnemy = null;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        _collider2D = GetComponent<CircleCollider2D>();
+        Upgrade();
     }
 
     void Update()
@@ -32,32 +39,35 @@ public class Tower : MonoBehaviour
             Shoot();
 
     }
-    
-    [ContextMenu("UpgradeToLevel2")]
-    public void UpgradeToLevel2() => UpgradeToLevel(2);
-    
-    [ContextMenu("UpgradeToLevel3")]
-    public void UpgradeToLevel3() => UpgradeToLevel(3);
 
-    private void UpgradeToLevel(int l)
+    [ContextMenu("Upgrade")]
+    public void Upgrade()
     {
-        level = l;
-        switch (level)
+        _level++;
+        switch (_level)
         {
+            case 1:
+                _timeToShotInSeconds = towerData.timeToShotInSeconds1;
+                _collider2D.radius = towerData.zoneRadius1;
+                break;
             case 2:
                 weaponTransform.localPosition = new Vector3(0, 0.3f, 0);
                 weaponAnimator.Play("IdleLevel2");
                 _animator.Play("Level2");
+                _timeToShotInSeconds = towerData.timeToShotInSeconds2;
+                _collider2D.radius = towerData.zoneRadius2;
                 break;
             case 3:
                 weaponTransform.localPosition = new Vector3(0, 0.4f, 0);
                 weaponAnimator.Play("IdleLevel3");
                 _animator.Play("Level3");
+                _timeToShotInSeconds = towerData.timeToShotInSeconds3;
+                _collider2D.radius = towerData.zoneRadius3;
                 break;
         }
     }
 
-    private bool CanShoot() => _timer > timeToShotInSeconds;
+    private bool CanShoot() => _timer > _timeToShotInSeconds;
 
     private void Shoot()
     {
@@ -66,9 +76,9 @@ public class Tower : MonoBehaviour
         var projectileObject = Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
         var projectileComponent = projectileObject.GetComponent<Projectile>();
         projectileComponent.targetEnemy = _targetEnemy;
-        projectileComponent.level = level;
+        projectileComponent.Level = Level;
         
-        weaponAnimator.Play("ShootLevel" + level);
+        weaponAnimator.Play("ShootLevel" + Level);
         _timer = 0;
     }
 

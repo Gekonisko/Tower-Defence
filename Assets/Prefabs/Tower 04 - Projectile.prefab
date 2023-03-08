@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetEnemy: {fileID: 0}
   speed: 10
-  level: 1
+  Level: 1
 --- !u!114 &3401320723147567177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,3 +184,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0.75
+  towerData: {fileID: 11400000, guid: 6353c640340f05442be2cf71f04319c9, type: 2}

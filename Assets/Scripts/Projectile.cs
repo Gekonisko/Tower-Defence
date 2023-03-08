@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour
 {
     public Transform targetEnemy;
     public float speed;
-    public int level = 1; 
+    public int Level = 1; 
     
     private Animator _animator;
     private Rigidbody2D _rigidbody2D;
@@ -18,13 +18,13 @@ public class Projectile : MonoBehaviour
         _damageDealer = GetComponent<IDamage>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
-        _animator.Play("IdleLevel" + level);
+        _animator.Play("IdleLevel" + Level);
     }
     
     private void Update()
     {
         if (targetEnemy == null)
-            Death();
+            DestroyThis();
         
         RotateToEnemy();
     }
@@ -54,7 +54,7 @@ public class Projectile : MonoBehaviour
     private void Death()
     {
         _isDying = true;
-        _animator.Play("DeathLevel" + level);
+        _animator.Play("DeathLevel" + Level);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
