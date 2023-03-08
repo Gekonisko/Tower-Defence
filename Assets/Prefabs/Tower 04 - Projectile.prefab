@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8787192258275287195}
   - component: {fileID: 8787192258275287192}
   - component: {fileID: 8787192258275287193}
+  - component: {fileID: 3401320723147567177}
   m_Layer: 0
   m_Name: Tower 04 - Projectile
   m_TagString: Projectile
@@ -170,3 +171,16 @@ MonoBehaviour:
   targetEnemy: {fileID: 0}
   speed: 10
   level: 1
+--- !u!114 &3401320723147567177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8787192258275287198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5edfc9564f04a5bb91f8d2bfe62df5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 0.75
