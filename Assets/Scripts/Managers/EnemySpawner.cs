@@ -8,6 +8,8 @@ namespace Managers
 {
     public class EnemySpawner : Singleton<EnemySpawner>
     {
+        public static bool IsWavePlaying = false;
+        
         [SerializeField] private float waveTimeInSeconds;
         [SerializeField] private int enemiesCount;
         [SerializeField] private List<GameObject> enemies;
@@ -16,20 +18,18 @@ namespace Managers
         private float _timeBetweenSpawns;
         private float _timer;
         
-        private IEnumerator _spawnEnemies;
-        
-        public override void Awake()
-        {
-            base.Awake();
-            _spawnEnemies = SpawnEnemies();
-        }
-
         private void Start()
         {
             _spawners = PathManager.Instance.GetStartPositions();
             _timeBetweenSpawns = waveTimeInSeconds / enemiesCount;
 
-            StartCoroutine(_spawnEnemies);
+            Events.OnStartWave += StartWave;
+        }
+
+        private void StartWave()
+        {
+            IsWavePlaying = true;
+            StartCoroutine("SpawnEnemies");
         }
 
         IEnumerator SpawnEnemies()
@@ -42,6 +42,13 @@ namespace Managers
             }
 
             _timer = 0;
+            IsWavePlaying = false;
+            Events.OnEndWave.Invoke();
+        }
+
+        private void OnDestroy()
+        {
+            Events.OnStartWave -= StartWave;
         }
     }
 }
