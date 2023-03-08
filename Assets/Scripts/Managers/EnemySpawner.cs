@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {
@@ -36,7 +37,8 @@ namespace Managers
         {
             while (_timer < waveTimeInSeconds)
             {
-                Instantiate(enemies.First(), _spawners.First(), Quaternion.identity);
+                int random = Random.Range(0, enemies.Count);
+                Instantiate(enemies[random], _spawners.First(), Quaternion.identity);
                 _timer += _timeBetweenSpawns;
                 yield return new WaitForSeconds(_timeBetweenSpawns);
             }

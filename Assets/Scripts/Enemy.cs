@@ -1,19 +1,26 @@
 using System;
 using Enums;
 using Managers;
+using ScriptableObjects;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private EnemyScriptableObject enemyData;
     [SerializeField] private float speed;
+    [SerializeField] private float hp;
     [SerializeField] private Direction direction = Direction.None;
     [SerializeField] private bool isDying = false;
+    [SerializeField] private bool flipX = false;
     
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
     private Vector3 _targetPosition;
     void Start()
     {
+        speed = enemyData.speed;
+        hp = enemyData.hp;
+        
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _targetPosition = PathManager.Instance.GetNextPosition(transform.position);
@@ -41,8 +48,15 @@ public class Enemy : MonoBehaviour
     }
 
     public void DestroyThis() => Destroy(gameObject);
+
+    public void DealDamage(int damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+            Death();
+    }
     
-    public void Death()
+    private void Death()
     {
         isDying = true;
         tag = "Untagged";
@@ -72,19 +86,19 @@ public class Enemy : MonoBehaviour
         switch (direction)
         {
             case Direction.Up:
-                _spriteRenderer.flipX = false;
+                _spriteRenderer.flipX = flipX;
                 _animator.Play("Up"); 
                 break;
             case Direction.Right:
-                _spriteRenderer.flipX = true;
+                _spriteRenderer.flipX = !flipX;
                 _animator.Play("Side"); 
                 break;
             case Direction.Down:
-                _spriteRenderer.flipX = false;
+                _spriteRenderer.flipX = flipX;
                 _animator.Play("Down"); 
                 break;
             case Direction.Left:
-                _spriteRenderer.flipX = false;
+                _spriteRenderer.flipX = flipX;
                 _animator.Play("Side"); 
                 break;
         }
@@ -95,19 +109,19 @@ public class Enemy : MonoBehaviour
         switch (direction)
         {
             case Direction.Up:
-                _spriteRenderer.flipX = false;
+                _spriteRenderer.flipX = flipX;
                 _animator.Play("UpDeath"); 
                 break;
             case Direction.Right:
-                _spriteRenderer.flipX = true;
+                _spriteRenderer.flipX = !flipX;
                 _animator.Play("SideDeath"); 
                 break;
             case Direction.Down:
-                _spriteRenderer.flipX = false;
+                _spriteRenderer.flipX = flipX;
                 _animator.Play("DownDeath"); 
                 break;
             case Direction.Left:
-                _spriteRenderer.flipX = false;
+                _spriteRenderer.flipX = flipX;
                 _animator.Play("SideDeath"); 
                 break;
         }

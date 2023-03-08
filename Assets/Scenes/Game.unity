@@ -8618,9 +8618,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveTimeInSeconds: 10
-  enemiesCount: 50
+  enemiesCount: 25
   enemies:
   - {fileID: 8272329009316756339, guid: 5e295025861c3f84783929e88471c0ce, type: 3}
+  - {fileID: 1398977062574356212, guid: 6d10b8b1d084a6f4da58e6933a251399, type: 3}
 --- !u!1 &1758071967
 GameObject:
   m_ObjectHideFlags: 0

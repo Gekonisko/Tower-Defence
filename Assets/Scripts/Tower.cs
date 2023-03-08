@@ -33,7 +33,6 @@ public class Tower : MonoBehaviour
     void Update()
     {
         _timer += Time.deltaTime;
-        RotateWeaponToEnemy();
 
         if (CanShoot())
             Shoot();
@@ -73,6 +72,8 @@ public class Tower : MonoBehaviour
     {
         if (_targetEnemy == null) return;
         
+        RotateWeaponToEnemy();
+        
         var projectileObject = Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
         var projectileComponent = projectileObject.GetComponent<Projectile>();
         projectileComponent.targetEnemy = _targetEnemy;
@@ -95,5 +96,11 @@ public class Tower : MonoBehaviour
     {
         if (_targetEnemy == null && other.CompareTag("Enemy"))
             _targetEnemy = other.transform;
+    }
+    
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (_targetEnemy == other.transform)
+            _targetEnemy = null;
     }
 }

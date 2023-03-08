@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd4b6dcc175e45dc8a2d935bfde6f309, type: 3}
   m_Name: Tower 04
   m_EditorClassIdentifier: 
-  timeToShotInSeconds1: 4
+  timeToShotInSeconds1: 2
   zoneRadius1: 2
-  timeToShotInSeconds2: 2
+  damage1: 1
+  timeToShotInSeconds2: 1
   zoneRadius2: 3
-  timeToShotInSeconds3: 1
+  damage2: 2
+  timeToShotInSeconds3: 0.75
   zoneRadius3: 4
+  damage3: 3
   explosionDamage1: 1
   explosionRadius1: 0.5
   explosionDamage2: 2
