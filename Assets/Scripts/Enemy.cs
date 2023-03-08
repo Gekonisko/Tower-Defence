@@ -1,3 +1,4 @@
+using System;
 using Enums;
 using Managers;
 using UnityEngine;
@@ -38,9 +39,10 @@ public class Enemy : MonoBehaviour
 
     public void DestroyThis() => Destroy(gameObject);
     
-    private void Death()
+    public void Death()
     {
         isDying = true;
+        tag = "Untagged";
         SetDyingAnimation();
     }
 
@@ -107,7 +109,6 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
-    
-    
+
 }
 

@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -49,6 +51,15 @@ TagManager:
     locked: 0
   - name: Obstacles
     uniqueID: 913024229
+    locked: 0
+  - name: Tower
+    uniqueID: 3223511977
+    locked: 0
+  - name: Enemies
+    uniqueID: 470451715
+    locked: 0
+  - name: Effects
+    uniqueID: 306066733
     locked: 0
   - name: Default
     uniqueID: 0
