@@ -9,11 +9,13 @@ public class Projectile : MonoBehaviour
     
     private Animator _animator;
     private Rigidbody2D _rigidbody2D;
+    private IDamage _damageDealer;
 
     private bool _isDying = false;
 
     private void Start()
     {
+        _damageDealer = GetComponent<IDamage>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _animator.Play("IdleLevel" + level);
@@ -60,7 +62,7 @@ public class Projectile : MonoBehaviour
         if (!_isDying && col.transform == targetEnemy)
         {
             Death();
-            col.transform.GetComponent<Enemy>().Death();
+            _damageDealer.Deal(targetEnemy);
         }
     }
 }

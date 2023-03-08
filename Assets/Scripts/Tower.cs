@@ -63,9 +63,10 @@ public class Tower : MonoBehaviour
     {
         if (_targetEnemy == null) return;
         
-        var p = Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
-        p.GetComponent<Projectile>().targetEnemy = _targetEnemy;
-        p.GetComponent<Projectile>().level = level;
+        var projectileObject = Instantiate(projectile, weaponTransform.position, weaponTransform.rotation);
+        var projectileComponent = projectileObject.GetComponent<Projectile>();
+        projectileComponent.targetEnemy = _targetEnemy;
+        projectileComponent.level = level;
         
         weaponAnimator.Play("ShootLevel" + level);
         _timer = 0;

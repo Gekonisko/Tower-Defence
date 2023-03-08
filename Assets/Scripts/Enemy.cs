@@ -30,8 +30,11 @@ public class Enemy : MonoBehaviour
         if (_targetPosition == transform.position)
         {
             if (PathManager.Instance.IsEndOfPath(transform.position))
+            {
+                Events.OnEnemyReachEnd.Invoke();
                 Death();
-            
+            }
+
             _targetPosition = PathManager.Instance.GetNextPosition(transform.position);
             UpdateDirection();
         }
